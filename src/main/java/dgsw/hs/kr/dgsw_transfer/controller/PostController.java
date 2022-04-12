@@ -38,14 +38,15 @@ public class PostController {
     }
 
     @GetMapping("/state/{state}")
-    public BaseResponse<List<AllPostResponse>> getStatePost(@PathVariable int state){
+    public BaseResponse<List<AllPostResponse>> getStatePost(@PathVariable int state) {
         List<AllPostResponse> responses = postService.getStatePost(state);
         return new BaseResponse<>(200, "긴급 게시글 조회 성공", responses);
     }
 
     @GetMapping("/detail/{postIdx}")
-    public BaseResponse<DetailPostResponse> getDetailPost(@PathVariable int postIdx){
-
+    public BaseResponse<DetailPostResponse> getDetailPost(@PathVariable int postIdx) {
+        DetailPostResponse response = postService.getDetail(postIdx);
+        return new BaseResponse<>(200, "상세 게시글 조회 성공", response);
     }
 
     @GetMapping("/my/{userIdx}")

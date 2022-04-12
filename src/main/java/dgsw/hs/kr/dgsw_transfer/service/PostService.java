@@ -7,6 +7,7 @@ import dgsw.hs.kr.dgsw_transfer.repository.PostRepository;
 import dgsw.hs.kr.dgsw_transfer.repository.UserRepository;
 import dgsw.hs.kr.dgsw_transfer.request.WriteRequest;
 import dgsw.hs.kr.dgsw_transfer.response.AllPostResponse;
+import dgsw.hs.kr.dgsw_transfer.response.DetailPostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,8 @@ public class PostService {
     }
 
     public List<AllPostResponse> getAllPost() {
+        updateAutoPostState();
+
         List<PostEntity> entities = repository.findAll();
         ArrayList<AllPostResponse> responses = new ArrayList<>();
 
@@ -53,7 +56,7 @@ public class PostService {
         return responses;
     }
 
-    public List<AllPostResponse> getStatePost(int state){
+    public List<AllPostResponse> getStatePost(int state) {
         List<PostEntity> entities = repository.findAllByState(state).get();
         ArrayList<AllPostResponse> responses = new ArrayList<>();
 
@@ -66,9 +69,9 @@ public class PostService {
 
     public List<AllPostResponse> getMyPost(int userIdx) throws CustomException {
         List<PostEntity> entities;
-        try{
+        try {
             entities = repository.findAllByWritter(userIdx).get();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException(HttpStatus.NOT_FOUND, "유저 정보를 찾지 못햇습니다.");
         }
@@ -80,6 +83,45 @@ public class PostService {
         });
 
         return responses;
+    }
+
+    public DetailPostResponse getDetail(int postIdx){
+        PostEntity entity = repository.getById(postIdx);
+        UserEntity userEntity = userRepository.getById(entity.getWritter());
+
+        DetailPostResponse response = new DetailPostResponse();
+
+        response.setIdx(entity.getIdx());
+        response.setTitle(entity.getTitle());
+        response.setContent(entity.getContent());
+        response.setPersonal(entity.getPersonal());
+        response.setCurrentPersonal(entity.getCurrentPersonal());
+        if(entity.getAnonymous() > 0){
+            response.setWritter("익명");
+            response.setWritterImage("");
+        } else {
+            response.setWritter(userEntity.getName());
+            response.setWritterImage(userEntity.getImage());
+        }
+        response.setTime(entity.getTime());
+        response.setCategory(entity.getCategory());
+        response.setState(entity.getState());
+        response.setHidden(entity.getHidden());
+
+        return response;
+    }
+
+    private void updateAutoPostState() {
+        List<PostEntity> entities = repository.findAll();
+
+        entities.forEach(it -> {
+            /*
+                if(여기서 시간 계산해서 바꿔주기) {
+                it.setState(1);
+                repository.save(it);
+                }
+            */
+        });
     }
 
     private AllPostResponse getResponses(PostEntity it) {

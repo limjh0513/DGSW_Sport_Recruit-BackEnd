@@ -1,5 +1,7 @@
 package dgsw.hs.kr.dgsw_transfer.response;
 
+import dgsw.hs.kr.dgsw_transfer.model.PostEntity;
+import dgsw.hs.kr.dgsw_transfer.model.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +25,8 @@ public class DetailPostResponse {
     private int category; // 카테고리
     private int state; // 긴급
     private int hidden; // 신청 목록 숨김
+
+    public DetailPostResponse(){
+
+    }
 }
