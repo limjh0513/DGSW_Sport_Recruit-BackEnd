@@ -1,13 +1,9 @@
 package dgsw.hs.kr.dgsw_transfer.response;
 
-import dgsw.hs.kr.dgsw_transfer.model.PostEntity;
-import dgsw.hs.kr.dgsw_transfer.model.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
 import java.sql.Timestamp;
 
 @Getter

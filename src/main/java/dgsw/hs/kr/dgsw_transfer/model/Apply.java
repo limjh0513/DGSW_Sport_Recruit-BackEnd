@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "apply")
-public class ApplyEntity {
+public class Apply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idx")
@@ -33,7 +33,7 @@ public class ApplyEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "applyTime")
+    @Column(name = "apply_time")
     private Timestamp applyTime;
 
     @Column(name = "state")
@@ -45,7 +45,7 @@ public class ApplyEntity {
     @Column(name = "userIdx")
     private int userIdx;
 
-    public ApplyEntity(ApplyRequest it) {
+    public Apply(ApplyRequest it) {
         this.grade = it.getGrade();
         this.room = it.getRoom();
         this.number = it.getNumber();

@@ -12,16 +12,15 @@ import javax.persistence.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-@Entity(name = "user")
-public class UserEntity {
+@Entity(name = "users")
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userIdx")
+    @Column(name = "user_idx")
     private int userIdx;
 
-    @Column(name = "userId")
-    private String id;
+    @Column(name = "user_id")
+    private String userId;
 
     @Column(name = "password")
     private String pw;
@@ -38,11 +37,11 @@ public class UserEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "profileImage")
+    @Column(name = "profile_image")
     private String image;
 
-    public UserEntity(String id, String pw, int grade, int room, int number, String name, String image) {
-        this.id = id;
+    public Users(String id, String pw, int grade, int room, int number, String name, String image) {
+        this.userId = id;
         this.pw = pw;
         this.grade = grade;
         this.room = room;
@@ -50,4 +49,6 @@ public class UserEntity {
         this.name = name;
         this.image = image;
     }
+
+    public Users(){}
 }

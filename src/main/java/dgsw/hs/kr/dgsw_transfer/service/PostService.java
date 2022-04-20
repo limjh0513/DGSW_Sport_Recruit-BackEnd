@@ -1,8 +1,8 @@
 package dgsw.hs.kr.dgsw_transfer.service;
 
 import dgsw.hs.kr.dgsw_transfer.exception.CustomException;
-import dgsw.hs.kr.dgsw_transfer.model.PostEntity;
-import dgsw.hs.kr.dgsw_transfer.model.UserEntity;
+import dgsw.hs.kr.dgsw_transfer.model.Post;
+import dgsw.hs.kr.dgsw_transfer.model.Users;
 import dgsw.hs.kr.dgsw_transfer.repository.PostRepository;
 import dgsw.hs.kr.dgsw_transfer.repository.UserRepository;
 import dgsw.hs.kr.dgsw_transfer.request.WriteRequest;
@@ -12,19 +12,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
-    static PostRepository repository;
-    static UserRepository userRepository;
+    private final PostRepository repository;
+    private final UserRepository userRepository;
 
     public Boolean writePost(WriteRequest request) throws CustomException {
         try {
-            PostEntity entity = new PostEntity(request);
+            Post entity = new Post(request);
             repository.save(entity);
             return true;
         } catch (Exception e) {
@@ -35,7 +34,7 @@ public class PostService {
     public List<AllPostResponse> getAllPost() {
         updateAutoPostState();
 
-        List<PostEntity> entities = repository.findAll();
+        List<Post> entities = repository.findAll();
         ArrayList<AllPostResponse> responses = new ArrayList<>();
 
         entities.forEach(it -> {
@@ -46,7 +45,7 @@ public class PostService {
     }
 
     public List<AllPostResponse> getCategoryPost(int category) {
-        List<PostEntity> entities = repository.findAllByCategory(category).get();
+        List<Post> entities = repository.findAllByCategory(category).get();
         ArrayList<AllPostResponse> responses = new ArrayList<>();
 
         entities.forEach(it -> {
@@ -57,7 +56,7 @@ public class PostService {
     }
 
     public List<AllPostResponse> getStatePost(int state) {
-        List<PostEntity> entities = repository.findAllByState(state).get();
+        List<Post> entities = repository.findAllByState(state).get();
         ArrayList<AllPostResponse> responses = new ArrayList<>();
 
         entities.forEach(it -> {
@@ -68,7 +67,7 @@ public class PostService {
     }
 
     public List<AllPostResponse> getMyPost(int userIdx) throws CustomException {
-        List<PostEntity> entities;
+        List<Post> entities;
         try {
             entities = repository.findAllByWritter(userIdx).get();
         } catch (Exception e) {
@@ -86,8 +85,8 @@ public class PostService {
     }
 
     public DetailPostResponse getDetail(int postIdx){
-        PostEntity entity = repository.getById(postIdx);
-        UserEntity userEntity = userRepository.getById(entity.getWritter());
+        Post entity = repository.getById(postIdx);
+        Users users = userRepository.getById(entity.getWritter());
 
         DetailPostResponse response = new DetailPostResponse();
 
@@ -100,8 +99,8 @@ public class PostService {
             response.setWritter("익명");
             response.setWritterImage("");
         } else {
-            response.setWritter(userEntity.getName());
-            response.setWritterImage(userEntity.getImage());
+            response.setWritter(users.getName());
+            response.setWritterImage(users.getImage());
         }
         response.setTime(entity.getTime());
         response.setCategory(entity.getCategory());
@@ -112,7 +111,7 @@ public class PostService {
     }
 
     private void updateAutoPostState() {
-        List<PostEntity> entities = repository.findAll();
+        List<Post> entities = repository.findAll();
 
         entities.forEach(it -> {
             /*
@@ -124,8 +123,8 @@ public class PostService {
         });
     }
 
-    private AllPostResponse getResponses(PostEntity it) {
-        UserEntity user = userRepository.findById(it.getWritter()).get();
+    private AllPostResponse getResponses(Post it) {
+        Users user = userRepository.findById(it.getWritter()).get();
         AllPostResponse response = new AllPostResponse();
         response.setIdx(it.getIdx());
         response.setTitle(it.getTitle());

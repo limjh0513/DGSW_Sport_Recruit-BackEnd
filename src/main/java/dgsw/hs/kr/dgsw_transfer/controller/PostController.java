@@ -1,8 +1,6 @@
 package dgsw.hs.kr.dgsw_transfer.controller;
 
 import dgsw.hs.kr.dgsw_transfer.exception.CustomException;
-import dgsw.hs.kr.dgsw_transfer.model.PostEntity;
-import dgsw.hs.kr.dgsw_transfer.repository.UserRepository;
 import dgsw.hs.kr.dgsw_transfer.request.WriteRequest;
 import dgsw.hs.kr.dgsw_transfer.response.AllPostResponse;
 import dgsw.hs.kr.dgsw_transfer.response.BaseResponse;

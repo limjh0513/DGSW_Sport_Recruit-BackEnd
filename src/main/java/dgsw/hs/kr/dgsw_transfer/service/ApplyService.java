@@ -1,7 +1,7 @@
 package dgsw.hs.kr.dgsw_transfer.service;
 
 import dgsw.hs.kr.dgsw_transfer.exception.CustomException;
-import dgsw.hs.kr.dgsw_transfer.model.ApplyEntity;
+import dgsw.hs.kr.dgsw_transfer.model.Apply;
 import dgsw.hs.kr.dgsw_transfer.repository.ApplyRepository;
 import dgsw.hs.kr.dgsw_transfer.request.ApplyRequest;
 import dgsw.hs.kr.dgsw_transfer.response.ApplyResponse;
@@ -15,11 +15,11 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ApplyService {
-    final ApplyRepository repository;
+    private final ApplyRepository repository;
 
     public List<ApplyResponse> getApplyResponse(int idx) throws CustomException {
         try {
-            List<ApplyEntity> entities = repository.findAllByPostIdx(idx).get();
+            List<Apply> entities = repository.findAllByPostIdx(idx).get();
             ArrayList<ApplyResponse> responses = new ArrayList<>();
             entities.forEach(it -> {
                 ApplyResponse response = new ApplyResponse(it);
@@ -35,7 +35,7 @@ public class ApplyService {
 
     public List<ApplyResponse> getMyApply(int userIdx) throws CustomException {
         try {
-            List<ApplyEntity> entities = repository.findAllByUserIdx(userIdx).get();
+            List<Apply> entities = repository.findAllByUserIdx(userIdx).get();
             ArrayList<ApplyResponse> responses = new ArrayList<>();
             entities.forEach(it -> {
                 ApplyResponse response = new ApplyResponse(it);
@@ -51,7 +51,7 @@ public class ApplyService {
 
     public Boolean postApply(ApplyRequest request) throws CustomException {
         try {
-            ApplyEntity entity = new ApplyEntity(request);
+            Apply entity = new Apply(request);
             repository.save(entity);
 
             return true;

@@ -14,8 +14,8 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "user")
-public class PostEntity {
+@Entity(name = "post")
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idx")
@@ -30,7 +30,7 @@ public class PostEntity {
     @Column(name = "personal")
     private int personal; // 인원 수
 
-    @Column(name = "currentPersonal")
+    @Column(name = "current_personal")
     private int currentPersonal; // 현재 인원 수
 
     @Column(name = "writter")
@@ -52,7 +52,7 @@ public class PostEntity {
     @Column(name = "hidden")
     private int hidden; // 신청 목록 숨김
 
-    public PostEntity(WriteRequest request) {
+    public Post(WriteRequest request) {
         this.title = request.getTitle();
         this.content = request.getContent();
         this.personal = request.getPersonnel();

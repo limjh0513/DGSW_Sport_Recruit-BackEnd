@@ -1,6 +1,6 @@
 package dgsw.hs.kr.dgsw_transfer.response;
 
-import dgsw.hs.kr.dgsw_transfer.model.ApplyEntity;
+import dgsw.hs.kr.dgsw_transfer.model.Apply;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +21,7 @@ public class ApplyResponse {
     private int postIdx;
     private int userIdx;
 
-    public ApplyResponse(ApplyEntity it) {
+    public ApplyResponse(Apply it) {
         this.idx = it.getIdx();
         this.grade = it.getGrade();
         this.room = it.getRoom();
