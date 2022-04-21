@@ -93,8 +93,8 @@ public class PostService {
         response.setIdx(entity.getIdx());
         response.setTitle(entity.getTitle());
         response.setContent(entity.getContent());
-        response.setPersonal(entity.getPersonal());
-        response.setCurrentPersonal(entity.getCurrentPersonal());
+        response.setPersonal(entity.getPersonnel());
+        response.setCurrentPersonal(entity.getCurrentPersonnel());
         if(entity.getAnonymous() > 0){
             response.setWritter("익명");
             response.setWritterImage("");
@@ -129,9 +129,9 @@ public class PostService {
         response.setIdx(it.getIdx());
         response.setTitle(it.getTitle());
         response.setContent(it.getContent());
-        response.setPersonal(it.getPersonal());
-        response.setCurrentPersonal(it.getCurrentPersonal());
-        if (it.getAnonymous() > 0) {
+        response.setPersonal(it.getPersonnel());
+        response.setCurrentPersonal(it.getCurrentPersonnel());
+        if (it.getAnonymous() <= 0) {
             response.setWritter(user.getName());
             response.setWritterImage(user.getImage());
         } else {

@@ -27,11 +27,11 @@ public class Post {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "personal")
-    private int personal; // 인원 수
+    @Column(name = "personnel")
+    private int personnel; // 인원 수
 
-    @Column(name = "current_personal")
-    private int currentPersonal; // 현재 인원 수
+    @Column(name = "current_personnel")
+    private int currentPersonnel; // 현재 인원 수
 
     @Column(name = "writter")
     private int writter;
@@ -55,7 +55,7 @@ public class Post {
     public Post(WriteRequest request) {
         this.title = request.getTitle();
         this.content = request.getContent();
-        this.personal = request.getPersonnel();
+        this.personnel = request.getPersonnel();
         this.writter = request.getWritter();
         this.time = request.getTime();
         this.category = request.getCategory();
