@@ -47,7 +47,9 @@ public class Users {
         this.room = room;
         this.number = number;
         this.name = name;
-        this.image = image;
+
+        if(image != null) this.image = image;
+        else this.image = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Football_Pallo_valmiina-cropped.jpg/200px-Football_Pallo_valmiina-cropped.jpg";
     }
 
     public Users(){}

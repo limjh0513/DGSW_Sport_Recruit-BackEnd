@@ -15,6 +15,7 @@ public class DetailPostResponse {
     private String content;
     private int personal;
     private int currentPersonal;
+    private String place;
     private String writter;
     private String writterImage;
     private Timestamp time;

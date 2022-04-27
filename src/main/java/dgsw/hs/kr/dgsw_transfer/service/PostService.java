@@ -102,6 +102,7 @@ public class PostService {
             response.setWritter(users.getName());
             response.setWritterImage(users.getImage());
         }
+        response.setPlace(entity.getPlace());
         response.setTime(entity.getTime());
         response.setCategory(entity.getCategory());
         response.setState(entity.getState());

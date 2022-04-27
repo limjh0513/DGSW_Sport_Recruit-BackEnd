@@ -33,6 +33,9 @@ public class Post {
     @Column(name = "current_personnel")
     private int currentPersonnel; // 현재 인원 수
 
+    @Column(name = "place")
+    private String place;
+
     @Column(name = "writter")
     private int writter;
 
@@ -57,6 +60,7 @@ public class Post {
         this.content = request.getContent();
         this.personnel = request.getPersonnel();
         this.writter = request.getWritter();
+        this.place = request.getPlace();
         this.time = request.getTime();
         this.category = request.getCategory();
         this.state = request.getState();
