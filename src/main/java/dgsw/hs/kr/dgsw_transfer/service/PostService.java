@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +86,7 @@ public class PostService {
         return responses;
     }
 
-    public DetailPostResponse getDetail(int postIdx){
+    public DetailPostResponse getDetail(int postIdx) {
         Post entity = repository.getById(postIdx);
         Users users = userRepository.getById(entity.getWritter());
 
@@ -95,7 +97,7 @@ public class PostService {
         response.setContent(entity.getContent());
         response.setPersonal(entity.getPersonnel());
         response.setCurrentPersonal(entity.getCurrentPersonnel());
-        if(entity.getAnonymous() > 0){
+        if (entity.getAnonymous() > 0) {
             response.setWritter("익명");
             response.setWritterImage("");
         } else {
@@ -111,16 +113,24 @@ public class PostService {
         return response;
     }
 
+    //@Scheduled(fixedDelay = 300000)
     private void updateAutoPostState() {
         List<Post> entities = repository.findAll();
+        String nowStr = LocalDateTime.now().toString();
+        Timestamp now = Timestamp.valueOf(nowStr.substring(0, 10) + " " + nowStr.substring(11, 19));
 
         entities.forEach(it -> {
-            /*
-                if(여기서 시간 계산해서 바꿔주기) {
-                it.setState(1);
+            Timestamp parseTime = new Timestamp(it.getTime().getTime() - 32400000);
+
+            if (now.after(parseTime)) {
+                it.setState(2);
                 repository.save(it);
+            } else {
+                if (parseTime.getTime() - now.getTime() < 10800000) {
+                    it.setState(1);
+                    repository.save(it);
                 }
-            */
+            }
         });
     }
 
