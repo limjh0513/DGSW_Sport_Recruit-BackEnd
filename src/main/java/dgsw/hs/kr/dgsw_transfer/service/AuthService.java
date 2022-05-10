@@ -20,7 +20,6 @@ public class AuthService {
 
         try {
             entity = repository.findByUserId(request.getId()).get();
-            System.out.println(entity.getUserIdx());
         } catch (Exception e) {
             throw new CustomException(HttpStatus.NOT_FOUND, "아이디가 일치하지 않습니다.");
         }
