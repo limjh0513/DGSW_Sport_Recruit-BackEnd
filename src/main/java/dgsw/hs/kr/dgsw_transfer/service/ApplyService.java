@@ -2,10 +2,13 @@ package dgsw.hs.kr.dgsw_transfer.service;
 
 import dgsw.hs.kr.dgsw_transfer.exception.CustomException;
 import dgsw.hs.kr.dgsw_transfer.model.Apply;
+import dgsw.hs.kr.dgsw_transfer.model.Post;
 import dgsw.hs.kr.dgsw_transfer.repository.ApplyRepository;
+import dgsw.hs.kr.dgsw_transfer.repository.PostRepository;
 import dgsw.hs.kr.dgsw_transfer.request.ApplyRequest;
 import dgsw.hs.kr.dgsw_transfer.response.ApplyResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ApplyService {
     private final ApplyRepository repository;
+    private final PostRepository postRepository;
 
     public List<ApplyResponse> getApplyResponse(int idx) throws CustomException {
         try {
@@ -53,6 +57,9 @@ public class ApplyService {
         try {
             Apply entity = new Apply(request);
             repository.save(entity);
+            Post post = postRepository.findById(request.getPostIdx()).get();
+            post.setCurrentPersonnel(post.getCurrentPersonnel() + 1);
+            postRepository.save(post);
 
             return true;
         } catch (Exception e) {

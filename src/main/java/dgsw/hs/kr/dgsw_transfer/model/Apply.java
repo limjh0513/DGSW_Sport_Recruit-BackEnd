@@ -39,10 +39,10 @@ public class Apply {
     @Column(name = "state")
     private int state;
 
-    @Column(name = "postIdx")
+    @Column(name = "post_idx")
     private int postIdx;
 
-    @Column(name = "userIdx")
+    @Column(name = "user_idx")
     private int userIdx;
 
     public Apply(ApplyRequest it) {
