@@ -21,11 +21,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository repository;
+
     private final UserRepository userRepository;
 
     public Boolean writePost(WriteRequest request) throws CustomException {
+        Post entity = new Post(request);
         try {
-            Post entity = new Post(request);
             repository.save(entity);
             return true;
         } catch (Exception e) {
@@ -116,11 +117,11 @@ public class PostService {
     //@Scheduled(fixedDelay = 300000)
     private void updateAutoPostState() {
         List<Post> entities = repository.findAll();
-        String nowStr = LocalDateTime.now().toString();
-        Timestamp now = Timestamp.valueOf(nowStr.substring(0, 10) + " " + nowStr.substring(11, 19));
+        String nowStr = LocalDateTime.now().toString(); //현재시간
+        Timestamp now = Timestamp.valueOf(nowStr.substring(0, 10) + " " + nowStr.substring(11, 19)); //형식에 맞춰서
 
         entities.forEach(it -> {
-            Timestamp parseTime = new Timestamp(it.getTime().getTime() - 32400000);
+            Timestamp parseTime = new Timestamp(it.getTime().getTime());
 
             if (now.after(parseTime)) {
                 it.setState(2);
@@ -135,6 +136,7 @@ public class PostService {
     }
 
     private AllPostResponse getResponses(Post it) {
+
         Users user = userRepository.findById(it.getWritter()).get();
         AllPostResponse response = new AllPostResponse();
         response.setIdx(it.getIdx());

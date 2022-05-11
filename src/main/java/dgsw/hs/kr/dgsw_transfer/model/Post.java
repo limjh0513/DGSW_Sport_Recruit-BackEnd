@@ -39,7 +39,6 @@ public class Post {
     @Column(name = "writter")
     private int writter;
 
-    @CreationTimestamp
     @Column(name = "time")
     private Timestamp time;
 
@@ -59,9 +58,10 @@ public class Post {
         this.title = request.getTitle();
         this.content = request.getContent();
         this.personnel = request.getPersonnel();
+        this.currentPersonnel = 0;
         this.writter = request.getWritter();
         this.place = request.getPlace();
-        this.time = request.getTime();
+        this.time = Timestamp.valueOf(request.getTime() + ":00");
         this.category = request.getCategory();
         this.state = request.getState();
         this.anonymous = request.getAnonymous();

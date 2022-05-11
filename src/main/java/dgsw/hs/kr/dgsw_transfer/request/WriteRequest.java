@@ -15,7 +15,7 @@ public class WriteRequest {
     private int personnel;
     private String place;
     private int writter;
-    private Timestamp time;
+    private String time;
     private int category;
     private int state;
     private int anonymous;
