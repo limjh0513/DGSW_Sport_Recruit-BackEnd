@@ -53,6 +53,24 @@ public class ApplyService {
         }
     }
 
+    public int getPostMyApply(int postIdx, int userIdx) throws CustomException {
+        try {
+            List<Apply> entities = repository.findAllByPostIdx(postIdx).get();
+            int result = -1;
+
+            for (Apply a : entities){
+                if(a.getUserIdx() == userIdx){
+                    result = a.getState();
+                }
+            }
+
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(HttpStatus.NOT_FOUND, "내 신청 목록 조회 중 문제가 발생했습니다.");
+        }
+    }
+
     public Boolean postApply(ApplyRequest request) throws CustomException {
         try {
             Apply entity = new Apply(request);

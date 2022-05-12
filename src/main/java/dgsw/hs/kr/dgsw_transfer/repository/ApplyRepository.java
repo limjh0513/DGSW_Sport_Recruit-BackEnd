@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ApplyRepository extends JpaRepository<Apply, Integer> {
     Optional<List<Apply>> findAllByPostIdx(int postIdx);
     Optional<List<Apply>> findAllByUserIdx(int userIdx);
+    Optional<List<Apply>> findBy
 }

@@ -98,6 +98,7 @@ public class PostService {
         response.setContent(entity.getContent());
         response.setPersonal(entity.getPersonnel());
         response.setCurrentPersonal(entity.getCurrentPersonnel());
+        response.setUserIdx(entity.getWritter());
         if (entity.getAnonymous() > 0) {
             response.setWritter("익명");
             response.setWritterImage("");

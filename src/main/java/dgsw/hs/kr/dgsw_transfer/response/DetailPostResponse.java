@@ -17,6 +17,7 @@ public class DetailPostResponse {
     private int currentPersonal;
     private String place;
     private String writter;
+    private int userIdx;
     private String writterImage;
     private Timestamp time;
     private int category; // 카테고리

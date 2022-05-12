@@ -28,6 +28,12 @@ public class ApplyController {
         return new BaseResponse<>(200, "내 신청 목록 조회 성공!", responses);
     }
 
+    @GetMapping("/get/{postIdx}/{userIdx}")
+    public BaseResponse<Integer> getPostMyApply(@PathVariable int postIdx, @PathVariable int userIdx) throws CustomException {
+        int response = service.getPostMyApply(postIdx, userIdx);
+        return new BaseResponse<>(200, "현재 게시글의 내 신청 조회 성공!", response);
+    }
+
     @PostMapping("/post")
     public BaseResponse<Boolean> postApply(@RequestBody ApplyRequest request) throws CustomException {
         Boolean result = service.postApply(request);
