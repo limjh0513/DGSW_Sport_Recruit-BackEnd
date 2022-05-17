@@ -98,7 +98,18 @@ public class ApplyService {
         try {
             Apply apply = repository.findById(applyIdx).get();
             apply.setState(state);
-            int result = state;
+            int result = apply.getState();
+            repository.save(apply);
+
+            Post post = postRepository.findById(apply.getPostIdx()).get();
+
+            if (state > 0) {
+                post.setCurrentPersonnel(post.getCurrentPersonnel() - 1);
+            } else {
+                post.setCurrentPersonnel(post.getCurrentPersonnel() + 1);
+            }
+
+            postRepository.save(post);
 
             return result;
         } catch (Exception e) {

@@ -41,7 +41,7 @@ public class ApplyController {
         return new BaseResponse<>(200, "신청 완료!", result);
     }
 
-    @PutMapping("/put/${applyIdx}/${state}")
+    @PutMapping("/put/{applyIdx}/{state}")
     public BaseResponse<Integer> putApply(@PathVariable int applyIdx, @PathVariable int state) throws CustomException {
         Integer result = service.putApply(applyIdx, state);
         return new BaseResponse<>(200, "신청 상태 변경 완료", result);
