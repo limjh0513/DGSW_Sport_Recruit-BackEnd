@@ -4,6 +4,7 @@ import dgsw.hs.kr.dgsw_transfer.exception.CustomException;
 import dgsw.hs.kr.dgsw_transfer.request.ApplyRequest;
 import dgsw.hs.kr.dgsw_transfer.response.ApplyResponse;
 import dgsw.hs.kr.dgsw_transfer.response.BaseResponse;
+import dgsw.hs.kr.dgsw_transfer.response.MyApplyResponse;
 import dgsw.hs.kr.dgsw_transfer.service.ApplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,8 @@ public class ApplyController {
     }
 
     @GetMapping("/get/{postIdx}/{userIdx}")
-    public BaseResponse<Integer> getPostMyApply(@PathVariable int postIdx, @PathVariable int userIdx) throws CustomException {
-        int response = service.getPostMyApply(postIdx, userIdx);
+    public BaseResponse<MyApplyResponse> getPostMyApply(@PathVariable int postIdx, @PathVariable int userIdx) throws CustomException {
+        MyApplyResponse response = service.getPostMyApply(postIdx, userIdx);
         return new BaseResponse<>(200, "현재 게시글의 내 신청 조회 성공!", response);
     }
 
@@ -38,5 +39,11 @@ public class ApplyController {
     public BaseResponse<Boolean> postApply(@RequestBody ApplyRequest request) throws CustomException {
         Boolean result = service.postApply(request);
         return new BaseResponse<>(200, "신청 완료!", result);
+    }
+
+    @PutMapping("/put/${applyIdx}/${state}")
+    public BaseResponse<Integer> putApply(@PathVariable int applyIdx, @PathVariable int state) throws CustomException {
+        Integer result = service.putApply(applyIdx, state);
+        return new BaseResponse<>(200, "신청 상태 변경 완료", result);
     }
 }

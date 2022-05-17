@@ -7,6 +7,7 @@ import dgsw.hs.kr.dgsw_transfer.repository.ApplyRepository;
 import dgsw.hs.kr.dgsw_transfer.repository.PostRepository;
 import dgsw.hs.kr.dgsw_transfer.request.ApplyRequest;
 import dgsw.hs.kr.dgsw_transfer.response.ApplyResponse;
+import dgsw.hs.kr.dgsw_transfer.response.MyApplyResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,14 +54,16 @@ public class ApplyService {
         }
     }
 
-    public int getPostMyApply(int postIdx, int userIdx) throws CustomException {
+    public MyApplyResponse getPostMyApply(int postIdx, int userIdx) throws CustomException {
         try {
-            List<Apply> entities = repository.findAllByPostIdx(postIdx).get();
-            int result = -1;
+            MyApplyResponse result = new MyApplyResponse();
 
-            for (Apply a : entities){
-                if(a.getUserIdx() == userIdx){
-                    result = a.getState();
+            List<Apply> entities = repository.findAllByPostIdx(postIdx).get();
+
+            for (Apply a : entities) {
+                if (a.getUserIdx() == userIdx) {
+                    result.setIdx(a.getIdx());
+                    result.setState(a.getState());
                 }
             }
 
@@ -77,12 +80,30 @@ public class ApplyService {
             repository.save(entity);
             Post post = postRepository.findById(request.getPostIdx()).get();
             post.setCurrentPersonnel(post.getCurrentPersonnel() + 1);
+
+            if (post.getCurrentPersonnel() == post.getPersonnel()) {
+                post.setState(2);
+            }
+
             postRepository.save(post);
 
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException(HttpStatus.BAD_REQUEST, "신청 중 문제가 발생했습니다.");
+        }
+    }
+
+    public int putApply(int applyIdx, int state) throws CustomException {
+        try {
+            Apply apply = repository.findById(applyIdx).get();
+            apply.setState(state);
+            int result = state;
+
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(HttpStatus.BAD_REQUEST, "신청 수정 중 문제가 발생했습니다.");
         }
     }
 }
