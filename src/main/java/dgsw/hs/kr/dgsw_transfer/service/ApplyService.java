@@ -109,6 +109,9 @@ public class ApplyService {
                 post.setCurrentPersonnel(post.getCurrentPersonnel() + 1);
             }
 
+            if (post.getCurrentPersonnel() == post.getPersonnel()) {
+                post.setState(2);
+            }
             postRepository.save(post);
 
             return result;
