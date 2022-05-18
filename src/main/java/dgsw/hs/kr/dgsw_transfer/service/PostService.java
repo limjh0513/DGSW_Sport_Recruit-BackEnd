@@ -87,6 +87,14 @@ public class PostService {
         return responses;
     }
 
+    public Boolean postEnded(int postIdx) {
+        Post entity = repository.findById(postIdx).get();
+        entity.setState(2);
+        repository.save(entity);
+
+        return true;
+    }
+
     public DetailPostResponse getDetail(int postIdx) {
         Post entity = repository.getById(postIdx);
         Users users = userRepository.getById(entity.getWritter());

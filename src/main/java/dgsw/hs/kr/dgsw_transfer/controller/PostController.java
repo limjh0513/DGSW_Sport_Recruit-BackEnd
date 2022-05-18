@@ -53,4 +53,10 @@ public class PostController {
         return new BaseResponse<>(200, "내가 작성한 게시글 조회 성공", responses);
     }
 
+    @PutMapping("/end/{postIdx}")
+    public BaseResponse<Boolean> putPostEnd(@PathVariable int postIdx) {
+        Boolean result = postService.postEnded(postIdx);
+        return new BaseResponse<>(200, "게시글 조기 종료 성공", result);
+    }
+
 }
