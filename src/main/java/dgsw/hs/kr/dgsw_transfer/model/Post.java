@@ -46,7 +46,7 @@ public class Post {
     private int category; // 카테고리
 
     @Column(name = "state")
-    private int state; // 긴급
+    private int state; // 긴급, 종료
 
     @Column(name = "anonymous")
     private int anonymous; // 익명

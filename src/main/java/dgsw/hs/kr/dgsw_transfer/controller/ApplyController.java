@@ -4,6 +4,7 @@ import dgsw.hs.kr.dgsw_transfer.exception.CustomException;
 import dgsw.hs.kr.dgsw_transfer.request.ApplyRequest;
 import dgsw.hs.kr.dgsw_transfer.response.ApplyResponse;
 import dgsw.hs.kr.dgsw_transfer.response.BaseResponse;
+import dgsw.hs.kr.dgsw_transfer.response.MyAllApplyResponse;
 import dgsw.hs.kr.dgsw_transfer.response.MyApplyResponse;
 import dgsw.hs.kr.dgsw_transfer.service.ApplyService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class ApplyController {
     }
 
     @GetMapping("/get/my/{userIdx}")
-    public BaseResponse<List<ApplyResponse>> getMyApply(@PathVariable int userIdx) throws CustomException {
-        List<ApplyResponse> responses = service.getMyApply(userIdx);
+    public BaseResponse<List<MyAllApplyResponse>> getMyApply(@PathVariable int userIdx) throws CustomException {
+        List<MyAllApplyResponse> responses = service.getMyApply(userIdx);
         return new BaseResponse<>(200, "내 신청 목록 조회 성공!", responses);
     }
 

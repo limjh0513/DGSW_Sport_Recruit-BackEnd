@@ -7,6 +7,7 @@ import dgsw.hs.kr.dgsw_transfer.repository.ApplyRepository;
 import dgsw.hs.kr.dgsw_transfer.repository.PostRepository;
 import dgsw.hs.kr.dgsw_transfer.request.ApplyRequest;
 import dgsw.hs.kr.dgsw_transfer.response.ApplyResponse;
+import dgsw.hs.kr.dgsw_transfer.response.MyAllApplyResponse;
 import dgsw.hs.kr.dgsw_transfer.response.MyApplyResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +39,14 @@ public class ApplyService {
         }
     }
 
-    public List<ApplyResponse> getMyApply(int userIdx) throws CustomException {
+    public List<MyAllApplyResponse> getMyApply(int userIdx) throws CustomException {
         try {
             List<Apply> entities = repository.findAllByUserIdx(userIdx).get();
-            ArrayList<ApplyResponse> responses = new ArrayList<>();
+            ArrayList<MyAllApplyResponse> responses = new ArrayList<>();
             entities.forEach(it -> {
-                ApplyResponse response = new ApplyResponse(it);
+                Post p = postRepository.findById(it.getPostIdx()).get();
+
+                MyAllApplyResponse response = new MyAllApplyResponse(it, p);
                 responses.add(response);
             });
 
