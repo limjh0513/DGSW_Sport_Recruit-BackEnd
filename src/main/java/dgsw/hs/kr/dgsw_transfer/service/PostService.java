@@ -132,13 +132,15 @@ public class PostService {
         entities.forEach(it -> {
             Timestamp parseTime = new Timestamp(it.getTime().getTime());
 
-            if (now.after(parseTime)) {
-                it.setState(2);
-                repository.save(it);
-            } else {
-                if (parseTime.getTime() - now.getTime() < 10800000) {
-                    it.setState(1);
+            if (it.getState() != 2) {
+                if (now.after(parseTime)) {
+                    it.setState(2);
                     repository.save(it);
+                } else {
+                    if (parseTime.getTime() - now.getTime() < 10800000) {
+                        it.setState(1);
+                        repository.save(it);
+                    }
                 }
             }
         });

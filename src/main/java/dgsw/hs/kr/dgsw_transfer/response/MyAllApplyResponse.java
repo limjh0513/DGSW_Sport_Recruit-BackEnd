@@ -2,9 +2,13 @@ package dgsw.hs.kr.dgsw_transfer.response;
 
 import dgsw.hs.kr.dgsw_transfer.model.Apply;
 import dgsw.hs.kr.dgsw_transfer.model.Post;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.sql.Timestamp;
-
+@Getter
+@Setter
+@AllArgsConstructor
 public class MyAllApplyResponse {
     private int idx;
     private int state;

@@ -16,6 +16,7 @@ public class DgswTransferApplication {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(DgswTransferApplication.class);
         application.setLogStartupInfo(false);
+
         application.run(args);
     }
 
