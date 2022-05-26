@@ -26,6 +26,8 @@ public class PostService {
 
     public Boolean writePost(WriteRequest request) throws CustomException {
         Post entity = new Post(request);
+        System.out.println(request.getTime());
+        System.out.println(entity.getTime());
         try {
             repository.save(entity);
             return true;
@@ -155,12 +157,12 @@ public class PostService {
         response.setContent(it.getContent());
         response.setPersonal(it.getPersonnel());
         response.setCurrentPersonal(it.getCurrentPersonnel());
-        if (it.getAnonymous() <= 0) {
+        if (it.getAnonymous() > 0) {
+            response.setWritter("익명");
+            response.setWritterImage("");
+        } else {
             response.setWritter(user.getName());
             response.setWritterImage(user.getImage());
-        } else {
-            response.setWritter(null);
-            response.setWritterImage(null);
         }
         response.setCategory(it.getCategory());
         response.setTime(it.getTime());
