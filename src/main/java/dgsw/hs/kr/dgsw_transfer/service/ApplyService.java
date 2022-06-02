@@ -79,18 +79,22 @@ public class ApplyService {
 
     public Boolean postApply(ApplyRequest request) throws CustomException {
         try {
-            Apply entity = new Apply(request);
-            repository.save(entity);
             Post post = postRepository.findById(request.getPostIdx()).get();
-            post.setCurrentPersonnel(post.getCurrentPersonnel() + 1);
 
-            if (post.getCurrentPersonnel() == post.getPersonnel()) {
-                post.setState(2);
+            if (post.getCurrentPersonnel() < post.getPersonnel() && post.getState() != 2) {
+                Apply entity = new Apply(request);
+                repository.save(entity);
+                post.setCurrentPersonnel(post.getCurrentPersonnel() + 1);
+
+                if (post.getCurrentPersonnel() == post.getPersonnel()) {
+                    post.setState(2);
+                }
+
+                postRepository.save(post);
+                return true;
             }
 
-            postRepository.save(post);
-
-            return true;
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException(HttpStatus.BAD_REQUEST, "신청 중 문제가 발생했습니다.");
@@ -100,24 +104,30 @@ public class ApplyService {
     public int putApply(int applyIdx, int state) throws CustomException {
         try {
             Apply apply = repository.findById(applyIdx).get();
-            apply.setState(state);
-            int result = apply.getState();
-            repository.save(apply);
-
             Post post = postRepository.findById(apply.getPostIdx()).get();
 
-            if (state > 0) {
-                post.setCurrentPersonnel(post.getCurrentPersonnel() - 1);
-            } else {
-                post.setCurrentPersonnel(post.getCurrentPersonnel() + 1);
+            if (post.getCurrentPersonnel() < post.getPersonnel() && post.getState() != 2) {
+
+                apply.setState(state);
+                int result = apply.getState();
+                repository.save(apply);
+
+
+                if (state > 0) {
+                    post.setCurrentPersonnel(post.getCurrentPersonnel() - 1);
+                } else {
+                    post.setCurrentPersonnel(post.getCurrentPersonnel() + 1);
+                }
+
+                if (post.getCurrentPersonnel() == post.getPersonnel()) {
+                    post.setState(2);
+                }
+                postRepository.save(post);
+
+                return result;
             }
 
-            if (post.getCurrentPersonnel() == post.getPersonnel()) {
-                post.setState(2);
-            }
-            postRepository.save(post);
-
-            return result;
+            return -1;
         } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException(HttpStatus.BAD_REQUEST, "신청 수정 중 문제가 발생했습니다.");
