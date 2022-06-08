@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -44,10 +45,14 @@ public class ApplyService {
             List<Apply> entities = repository.findAllByUserIdx(userIdx).get();
             ArrayList<MyAllApplyResponse> responses = new ArrayList<>();
             entities.forEach(it -> {
-                Post p = postRepository.findById(it.getPostIdx()).get();
 
-                MyAllApplyResponse response = new MyAllApplyResponse(it, p);
-                responses.add(response);
+                Optional<Post> p = postRepository.findById(it.getPostIdx());
+
+                if(p.isPresent()){
+                    MyAllApplyResponse response = new MyAllApplyResponse(it, p.get());
+                    responses.add(response);
+                }
+
             });
 
             return responses;

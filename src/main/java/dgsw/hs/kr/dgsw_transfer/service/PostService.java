@@ -67,7 +67,6 @@ public class PostService {
         entities.forEach(it -> {
             responses.add(getResponses(it));
         });
-
         return responses;
     }
 
