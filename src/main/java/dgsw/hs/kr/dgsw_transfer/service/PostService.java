@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,7 +129,7 @@ public class PostService {
     private void updateAutoPostState() {
         List<Post> entities = repository.findAll();
         String nowStr = LocalDateTime.now().toString(); //현재시간
-        Timestamp now = Timestamp.valueOf(nowStr.substring(0, 10) + " " + nowStr.substring(11, 19)); //형식에 맞춰서
+        Timestamp now = new Timestamp(Timestamp.valueOf(nowStr.substring(0, 10) + " " + nowStr.substring(11, 19)).getTime() + 32400000); // 형식에 맞춰서 + 9시간 추가
 
         entities.forEach(it -> {
             Timestamp parseTime = new Timestamp(it.getTime().getTime());

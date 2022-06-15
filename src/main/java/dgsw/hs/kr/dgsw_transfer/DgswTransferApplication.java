@@ -10,7 +10,8 @@ import java.util.TimeZone;
 public class DgswTransferApplication {
     @PostConstruct
     void started() {
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+        //TimeZone.setDefault(TimeZone.getTimeZone("Etc/UTC"));
+        TimeZone.setDefault(TimeZone.getTimeZone("asia/seoul"));
     }
 
     public static void main(String[] args) {
